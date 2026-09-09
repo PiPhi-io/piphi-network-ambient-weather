@@ -1,0 +1,329 @@
+{
+  "$schema": "./schema/piphi-manifest.schema.json",
+  "manifest_version": "1.0",
+  "id": "piphi-network-ambient-weather",
+  "name": "Ambient Weather",
+  "version": "0.1.1",
+  "description": "AmbientWeather.net station discovery, observations, and bounded history.",
+  "metadata": {
+    "generator": "piphi-network-create",
+    "scaffold_version": "0.3.0",
+    "preset": "cloud-polling-api",
+    "domain": "cloud-api"
+  },
+  "maintainer": {
+    "name": "PiPhi-io",
+    "website": "https://github.com/PiPhi-io"
+  },
+  "license": "Apache-2.0",
+  "image": "ghcr.io/piphi-io/piphi-network-ambient-weather:0.1.1",
+  "platforms": [
+    "linux"
+  ],
+  "runtime": {
+    "linux": {
+      "type": "container",
+      "container": {
+        "image": "ghcr.io/piphi-io/piphi-network-ambient-weather:0.1.1",
+        "ports": [
+          {
+            "container": 8090,
+            "host": 8090
+          }
+        ],
+        "environment": {
+          "LOG_LEVEL": "info"
+        },
+        "restart_policy": {
+          "name": "unless-stopped",
+          "maximum_retry_count": 0
+        }
+      },
+      "discovery": {
+        "method": "passive"
+      }
+    }
+  },
+  "api": {
+    "required": [
+      "health",
+      "entities",
+      "command",
+      "config",
+      "ui_config"
+    ],
+    "endpoints": {
+      "health": "/health",
+      "diagnostics": "/diagnostics",
+      "discover": "/discover",
+      "entities": "/entities",
+      "state": "/state",
+      "config": "/config",
+      "config_sync": "/config/sync",
+      "deconfigure": "/deconfigure",
+      "ui_config": "/ui-config",
+      "events": "/events",
+      "command": "/command"
+    }
+  },
+  "config": {
+    "source": "endpoint",
+    "endpoint": "/ui-config",
+    "required": true,
+    "editable_fields": [
+      "account_id",
+      "alias",
+      "application_key",
+      "api_key",
+      "poll_interval_seconds"
+    ],
+    "runtime_fields": [
+      "id",
+      "config_id",
+      "container_id",
+      "device_id"
+    ],
+    "identity_fields": [
+      "account_id"
+    ]
+  },
+  "identity": {
+    "fields": [
+      "account_id"
+    ]
+  },
+  "capabilities": {
+    "connected": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "observed_at_ms": {
+      "kind": "sensor",
+      "unit": "ms"
+    },
+    "temperature_f": {
+      "kind": "sensor",
+      "unit": "F"
+    },
+    "humidity_percent": {
+      "kind": "sensor",
+      "unit": "%"
+    },
+    "pressure_relative_inhg": {
+      "kind": "sensor",
+      "unit": "inHg"
+    },
+    "pressure_absolute_inhg": {
+      "kind": "sensor",
+      "unit": "inHg"
+    },
+    "wind_speed_mph": {
+      "kind": "sensor",
+      "unit": "mph"
+    },
+    "wind_gust_mph": {
+      "kind": "sensor",
+      "unit": "mph"
+    },
+    "wind_gust_daily_max_mph": {
+      "kind": "sensor",
+      "unit": "mph"
+    },
+    "wind_direction_deg": {
+      "kind": "sensor",
+      "unit": "deg"
+    },
+    "rain_hourly_in": {
+      "kind": "sensor",
+      "unit": "in"
+    },
+    "rain_daily_in": {
+      "kind": "sensor",
+      "unit": "in"
+    },
+    "rain_weekly_in": {
+      "kind": "sensor",
+      "unit": "in"
+    },
+    "rain_monthly_in": {
+      "kind": "sensor",
+      "unit": "in"
+    },
+    "rain_yearly_in": {
+      "kind": "sensor",
+      "unit": "in"
+    },
+    "solar_radiation_wm2": {
+      "kind": "sensor",
+      "unit": "W/m2"
+    },
+    "uv_index": {
+      "kind": "sensor",
+      "unit": "index"
+    },
+    "feels_like_f": {
+      "kind": "sensor",
+      "unit": "F"
+    },
+    "dew_point_f": {
+      "kind": "sensor",
+      "unit": "F"
+    },
+    "indoor_temperature_f": {
+      "kind": "sensor",
+      "unit": "F"
+    },
+    "indoor_humidity_percent": {
+      "kind": "sensor",
+      "unit": "%"
+    },
+    "pm25_ugm3": {
+      "kind": "sensor",
+      "unit": "ug/m3"
+    },
+    "pm25_24h_ugm3": {
+      "kind": "sensor",
+      "unit": "ug/m3"
+    },
+    "pm25_aqi": {
+      "kind": "sensor",
+      "unit": "AQI"
+    },
+    "pm25_aqi_24h": {
+      "kind": "sensor",
+      "unit": "AQI"
+    },
+    "lightning_distance_mi": {
+      "kind": "sensor",
+      "unit": "mi"
+    },
+    "lightning_count": {
+      "kind": "sensor",
+      "unit": "count"
+    },
+    "soil_moisture_1_percent": {
+      "kind": "sensor",
+      "unit": "%"
+    },
+    "soil_moisture_2_percent": {
+      "kind": "sensor",
+      "unit": "%"
+    },
+    "soil_moisture_3_percent": {
+      "kind": "sensor",
+      "unit": "%"
+    },
+    "soil_moisture_4_percent": {
+      "kind": "sensor",
+      "unit": "%"
+    },
+    "outdoor_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "lightning_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_1_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_2_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_3_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_4_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_5_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_6_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_7_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_8_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_9_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "sensor_10_battery_ok": {
+      "kind": "sensor",
+      "unit": "bool"
+    },
+    "refresh": {
+      "kind": "action"
+    },
+    "temperature_c": {
+      "kind": "sensor",
+      "unit": "C"
+    },
+    "pressure_hpa": {
+      "kind": "sensor",
+      "unit": "hPa"
+    },
+    "wind_speed_mps": {
+      "kind": "sensor",
+      "unit": "m/s"
+    },
+    "wind_gust_mps": {
+      "kind": "sensor",
+      "unit": "m/s"
+    },
+    "rain_mm": {
+      "kind": "sensor",
+      "unit": "mm"
+    },
+    "lightning_distance_km": {
+      "kind": "sensor",
+      "unit": "km"
+    }
+  },
+  "commands": {
+    "refresh": {
+      "description": "Refresh Ambient Weather stations.",
+      "timeout_ms": 15000
+    }
+  },
+  "entities": [
+    {
+      "id": "ambient-account",
+      "name": "Ambient Weather",
+      "device_id": "ambient-account",
+      "entity_type": "weather_station",
+      "capabilities": [
+        "connected",
+        "refresh"
+      ],
+      "available_commands": [
+        {
+          "id": "refresh",
+          "label": "Refresh stations",
+          "kind": "action"
+        }
+      ],
+      "dashboard": {
+        "allowed_widgets": [
+          "weather-station",
+          "tile",
+          "stat"
+        ],
+        "default_widget": "weather-station"
+      }
+    }
+  ]
+}

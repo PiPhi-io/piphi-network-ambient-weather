@@ -1,1 +1,133 @@
-{"behaviorSchemaVersion":"integration.behaviors.v2","templates":[],"devices":[{"id":"ambient_weather_station","name":"Ambient Weather station","description":"Personal weather station observations.","deviceClass":"weather_station","entityType":"weather_station","capabilities":["connected","temperature_f","humidity_percent","pressure_relative_inhg","pressure_absolute_inhg","wind_speed_mph","wind_gust_mph","wind_direction_deg","rain_hourly_in","rain_daily_in","solar_radiation_wm2","uv_index","pm25_ugm3","lightning_distance_mi","lightning_count","refresh"],"targeting":{"scopes":["config","selection"],"fanout":{"supported":false,"defaultMode":"selection","allowedModes":["config","selection"]}},"freshness":{"maxAgeSeconds":900,"staleDataMode":"block"},"ui":{"icon":"cloud-rain","category":"weather"},"triggers":[],"intents":[{"id":"observe_station","label":"Observe station","description":"Build automations from station observations."}],"conditions":[{"id":"rain_detected","label":"Rain is detected","description":"Hourly rainfall is greater than zero.","type":"number","capability":"rain_hourly_in","operators":["gt"],"runtime":{"source":"state","field":"rain_hourly_in","operator":"gt"},"freshness":{"maxAgeSeconds":900,"staleDataMode":"block"},"ui":{"group":"if"}}],"actions":[{"id":"refresh","label":"Refresh stations","description":"Fetch the latest observations.","capability":"refresh","command":"refresh","parameters":{"type":"object","properties":{},"additionalProperties":false},"confirmation":{"required":false},"fanout":{"safe":true,"partialFailure":"continue"},"execution":{"timeoutSeconds":15,"retry":{"allowed":true,"maxAttempts":2},"idempotency":{"required":false}},"ui":{"group":"then"}}]}]}
+{
+  "behaviorSchemaVersion": "integration.behaviors.v2",
+  "templates": [],
+  "devices": [
+    {
+      "id": "ambient_weather_station",
+      "name": "Ambient Weather station",
+      "description": "Personal weather station observations.",
+      "deviceClass": "weather_station",
+      "entityType": "weather_station",
+      "capabilities": [
+        "connected",
+        "temperature_f",
+        "humidity_percent",
+        "pressure_relative_inhg",
+        "pressure_absolute_inhg",
+        "wind_speed_mph",
+        "wind_gust_mph",
+        "wind_direction_deg",
+        "rain_hourly_in",
+        "rain_daily_in",
+        "solar_radiation_wm2",
+        "uv_index",
+        "pm25_ugm3",
+        "lightning_distance_mi",
+        "lightning_count",
+        "refresh"
+      ],
+      "targeting": {
+        "scopes": [
+          "config",
+          "selection"
+        ],
+        "fanout": {
+          "supported": false,
+          "defaultMode": "selection",
+          "allowedModes": [
+            "config",
+            "selection"
+          ]
+        }
+      },
+      "freshness": {
+        "maxAgeSeconds": 900,
+        "staleDataMode": "block"
+      },
+      "ui": {
+        "icon": "cloud-rain",
+        "category": "weather"
+      },
+      "triggers": [],
+      "intents": [
+        {
+          "id": "observe_station",
+          "label": "Observe station",
+          "description": "Build automations from station observations."
+        }
+      ],
+      "conditions": [
+        {
+          "id": "rain_detected",
+          "label": "Rain is detected",
+          "description": "Hourly rainfall is greater than zero.",
+          "type": "number",
+          "capability": "rain_hourly_in",
+          "operators": [
+            "gt"
+          ],
+          "runtime": {
+            "source": "state",
+            "field": "rain_hourly_in",
+            "operator": "gt"
+          },
+          "freshness": {
+            "maxAgeSeconds": 900,
+            "staleDataMode": "block"
+          },
+          "ui": {
+            "group": "if"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "id": "refresh",
+          "label": "Refresh stations",
+          "description": "Fetch the latest observations.",
+          "capability": "refresh",
+          "command": "refresh",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "confirmation": {
+            "required": false
+          },
+          "fanout": {
+            "safe": true,
+            "partialFailure": "continue"
+          },
+          "execution": {
+            "timeoutSeconds": 15,
+            "retry": {
+              "allowed": true,
+              "maxAttempts": 2
+            },
+            "idempotency": {
+              "required": false
+            }
+          },
+          "ui": {
+            "group": "then"
+          },
+          "capabilityRequirements": [
+            "refresh"
+          ],
+          "runtime": {
+            "command": "refresh",
+            "endpoint": "/command",
+            "method": "POST",
+            "timeoutSeconds": 15
+          },
+          "safety": {
+            "riskLevel": "low",
+            "requiresConfirmation": false,
+            "liveRunAllowed": true
+          }
+        }
+      ]
+    }
+  ]
+}
